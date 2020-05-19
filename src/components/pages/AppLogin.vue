@@ -61,8 +61,9 @@ export default {
       this.axios.post('/blog/user/login',{email:this.email,password:this.password})
         .then(result=>{
           if(result.data.token){
-            document.cookie = "token="+result.data.token +";expires="+new Date(new Date().getFullYear,new Date().getMonth,new Date().getDate + 7).toDateString()
+            //document.cookie = "token="+result.data.token +";expires="+new Date(new Date().getFullYear,new Date().getMonth,new Date().getDate + 7).toDateString()
             localStorage.setItem('token',result.data.token)
+            this.$store.commit("setToken", result.data.token);
             this.$router.push('/')
           }else{
             this.tips.email = result.data.message

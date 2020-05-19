@@ -25,13 +25,15 @@ export default {
   created() {
     this.getUserinfo();
     this.getDataList();
+   
   },
   methods: {
     getUserinfo() {
       this.axios
         .get("/blog/user/userinfo")
         .then(result => {
-          console.log(result);
+          this.$store.commit('setAuth', result.data.info)
+          console.log(this.$store.getters.auth);
         })
         .catch(err => {
           console.log(err);
@@ -41,9 +43,7 @@ export default {
       this.axios
         .get("/blog/book/list")
         .then(result => {
-          console.log(result.data);
           this.list = result.data.bookList;
-          console.log(this.list,Math.random().toString(16).slice(-6));
         })
         .catch(err => {
           console.log(err);

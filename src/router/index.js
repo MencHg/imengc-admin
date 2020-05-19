@@ -6,6 +6,7 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
+    meta:"首页",
     component: () => import('../components/pages/AppHome.vue')
   },
   {
@@ -34,6 +35,15 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+router.beforeEach((to, from, next) => {
+  let token = window.localStorage.token ? true : false
+  if(to.path !== '/login'){
+    if(token) next()
+    else next('/login')
+  }else{
+    next()
+  }
 })
 
 export default router
